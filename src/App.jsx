@@ -78,7 +78,7 @@ const App = () => {
         <div className="app">
             <Routes>
                 <Route
-                    path="/"
+                    path="/Gesture-Tool"
                     element={
                         <DrawPage
                             gestures={gestures}
@@ -92,10 +92,13 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/visualize"
+                    path="/Gesture-Tool/visualize"
                     element={<VisualizationPage gestures={gestures} />}
                 />
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route
+                    path="*"
+                    element={<Navigate to="/Gesture-Tool" replace />}
+                />
             </Routes>
         </div>
     );
@@ -143,14 +146,12 @@ const DrawPage = ({
             </button>
             <button
                 style={{ marginTop: "10px", marginLeft: "10px" }}
-                onClick={viewGestures}
-            >
+                onClick={viewGestures}>
                 View Gestures
             </button>
             <button
                 style={{ marginTop: "10px", marginLeft: "10px" }}
-                onClick={saveGesturesAsFile}
-            >
+                onClick={saveGesturesAsFile}>
                 Save Gestures
             </button>
         </div>
@@ -165,8 +166,7 @@ const DrawGesture = ({ onGesture }) => {
             <div
                 ref={containerRef}
                 className={"gesturePad__inner"}
-                style={{ width: "400px", height: "400px" }}
-            >
+                style={{ width: "400px", height: "400px" }}>
                 <GestureRecorder
                     element={containerRef.current}
                     onGesture={onGesture}
@@ -330,8 +330,7 @@ const GroupSelection = ({
             <h2>Group Selection</h2>
             <select
                 value={currentGestureGroup ? currentGestureGroup.name : ""}
-                onChange={(e) => selectGroup(e.target.value)}
-            >
+                onChange={(e) => selectGroup(e.target.value)}>
                 <option value="">Select a group...</option>
                 {gestures.map((group) => (
                     <option key={group.name} value={group.name}>
