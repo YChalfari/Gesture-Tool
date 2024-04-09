@@ -9,4 +9,5 @@ export default defineConfig({
             ".jsx": "text/javascript",
         },
     },
+    base: "/Gesture-Tool/",
 });
