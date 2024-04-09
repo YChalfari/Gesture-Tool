@@ -166,7 +166,7 @@ const DrawGesture = ({ onGesture }) => {
             <div
                 ref={containerRef}
                 className={"gesturePad__inner"}
-                style={{ width: "400px", height: "400px" }}>
+                style={{ width: "300px", height: "300px" }}>
                 <GestureRecorder
                     element={containerRef.current}
                     onGesture={onGesture}
@@ -253,8 +253,8 @@ const GesturePainter = () => {
     return (
         <canvas
             ref={canvasRef}
-            width={"400px"}
-            height={"400px"}
+            width={"300px"}
+            height={"300px"}
             onMouseDown={startPainting}
             onTouchStart={startPainting}
             onMouseMove={paint}
