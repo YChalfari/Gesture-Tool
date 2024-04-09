@@ -268,7 +268,7 @@ const GesturePainter = () => {
 
 function GestureRecorder({ element, onGesture }) {
     useEffect(() => {
-        const manager = new Hammer.Manager(element || document.body);
+        const manager = new Hammer.Manager(element);
         manager.add(
             new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 })
         );
