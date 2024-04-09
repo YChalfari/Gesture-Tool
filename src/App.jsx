@@ -130,7 +130,7 @@ const DrawPage = ({
         [addGroup]
     );
 
-    const viewGestures = () => navigate("/visualize");
+    const viewGestures = () => navigate("/Gesture-Tool/visualize");
 
     return (
         <div className="draw_page">
@@ -356,7 +356,9 @@ const VisualizationPage = ({ gestures }) => {
     return (
         <div className="app flexColCenter">
             <h1>Unistroke Visualizer</h1>
-            <button onClick={() => navigate("/")}>Back to Draw Page</button>
+            <button onClick={() => navigate("/Gesture-Tool")}>
+                Back to Draw Page
+            </button>
             {gestures?.map((group, i) => (
                 <GroupContainer
                     group={group}
