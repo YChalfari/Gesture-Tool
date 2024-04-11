@@ -225,53 +225,62 @@ const GesturePainter = () => {
     }, []);
 
     const onTouchMove = useCallback(
-        ({ touches }) => {
+        (event) => {
+            event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+
             if (!isPaintingRef.current) {
                 return;
             }
 
             const { top, left, width, height } =
                 canvasRef.current.getBoundingClientRect();
-            const { clientX, clientY } = touches[0];
+            const { clientX, clientY } = event.touches[0];
 
             if (
-                // touch inside of canvas bounds
+                // Touch is inside canvas bounds
                 clientX >= left &&
                 clientX <= left + width &&
                 clientY >= top &&
                 clientY <= top + height
             ) {
-                paint({ touches });
+                paint({ touches: event.touches });
             } else {
-                // touch outside of canvas bounds
+                // Touch is outside canvas bounds
                 endPainting();
             }
         },
         [endPainting, paint]
     );
 
-    const handleTouchStart = (event) => {
-        event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-        startPainting();
-    };
+    useEffect(() => {
+        const canvas = canvasRef.current;
 
-    const handleTouchMove = (event) => {
-        event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-        onTouchMove({ touches: event.touches });
-    };
+        const handleTouchMove = (event) => {
+            onTouchMove(event);
+        };
+
+        canvas.addEventListener("touchmove", handleTouchMove, {
+            passive: false,
+        });
+
+        return () => {
+            canvas.removeEventListener("touchmove", handleTouchMove);
+        };
+    }, [onTouchMove]);
 
     return (
         <canvas
             ref={canvasRef}
-            width={"300px"}
-            height={"300px"}
+            width={300}
+            height={300}
             onMouseDown={startPainting}
-            onTouchStart={handleTouchStart}
+            onTouchStart={startPainting}
             onMouseMove={paint}
-            onTouchMove={handleTouchMove}
+            onTouchMove={paint}
             onMouseUp={endPainting}
             onTouchEnd={endPainting}
             onMouseLeave={endPainting}
+            style={{ touchAction: "none" }} // Prevent default touch actions on the canvas
         />
     );
 };
