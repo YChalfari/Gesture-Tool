@@ -224,7 +224,7 @@ const GesturePainter = () => {
         context.stroke();
     }, []);
 
-    const handleTouchMove = useCallback(
+    const onTouchMove = useCallback(
         ({ touches }) => {
             if (!isPaintingRef.current) {
                 return;
@@ -250,13 +250,23 @@ const GesturePainter = () => {
         [endPainting, paint]
     );
 
+    const handleTouchStart = (event) => {
+        event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+        startPainting();
+    };
+
+    const handleTouchMove = (event) => {
+        event.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+        onTouchMove({ touches: event.touches });
+    };
+
     return (
         <canvas
             ref={canvasRef}
             width={"300px"}
             height={"300px"}
             onMouseDown={startPainting}
-            onTouchStart={startPainting}
+            onTouchStart={handleTouchStart}
             onMouseMove={paint}
             onTouchMove={handleTouchMove}
             onMouseUp={endPainting}
